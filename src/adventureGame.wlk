@@ -9,7 +9,7 @@ object adventureGame {
 		self.configurarCursor()
 		self.agregarPersonajes()
 		self.definirControles()
-			// game.cellSize(80)
+		game.cellSize(15)
 		piso.mostrarPiso()
 		llaves.mostrarLlave()
 		game.addVisual(puerta)
@@ -21,8 +21,8 @@ object adventureGame {
 
 	method configurarPantalla() {
 		game.title("Adventure Game")
-		game.width(15)
-		game.height(11)
+		game.width(50)
+		game.height(35)
 		game.boardGround("fondo_" + nivel + ".png")
 	}
 
@@ -43,7 +43,7 @@ object adventureGame {
 	}
 
 	method definirControles() {
-	 keyboard.s().onPressDo {casper.sacarVida()}
+		keyboard.s().onPressDo{casper.sacarVida(1)}
 	// keyboard.r().onPressDo {cursor.reforzarHeroe() }
 	// keyboard.a().onPressDo {wakanda.esAtacada(cursor.heroeElegido())}
 	// keyboard.s().onPressDo {wakanda.situacion()}
@@ -57,13 +57,14 @@ object adventureGame {
 object piso {
 
 	method mostrarPiso() {
-		8.times({ n => game.addVisual(new PisoDeTierra(position = game.at(n - 1, 0)))})
-		7.times({ n => game.addVisual(new Agua(position = game.at(n + 7, 0)))})
-		4.times({ n => game.addVisual(new PisoDeTierra(position = game.at(n + 6, 3)))})
-		5.times({ n => game.addVisual(new PisoDeTierra(position = game.at(n - 1, 5)))})
-		2.times({ n => game.addVisual(new PisoDeTierra(position = game.at(n + 12, 6)))})
-		2.times({ n => game.addVisual(new PisoDeTierra(position = game.at(n + 7, 7)))})
-		3.times({ n => game.addVisual(new PisoDeTierra(position = game.at(n + 1, 8)))})
+		20.times({ n => game.addVisual(new PisoDeTierra(position = game.at(n - 1, 0)))})
+		20.times({ n => game.addVisual(new PisoDePasto(position = game.at(n - 1, 1)))})
+		30.times({ n => game.addVisual(new Agua(position = game.at(n + 19, 0)))})
+		5.times({ n => game.addVisual(new PisoDePasto(position = game.at(n + 18, 6)))})
+		5.times({ n => game.addVisual(new PisoDePasto(position = game.at(n - 1, 10)))})
+		2.times({ n => game.addVisual(new PisoDePasto(position = game.at(n + 12, 6)))})
+		2.times({ n => game.addVisual(new PisoDePasto(position = game.at(n + 7, 7)))})
+		3.times({ n => game.addVisual(new PisoDePasto(position = game.at(n + 1, 8)))})
 	}
 
 }
@@ -77,6 +78,14 @@ object llaves {
 }
 
 class PisoDeTierra {
+
+	var property position
+
+	method image() = "piso_nivel_1_sin_pasto.png"
+
+}
+
+class PisoDePasto {
 
 	var property position
 
@@ -110,18 +119,15 @@ object puerta {
 
 object casper {
 
-	var vidas = null
+	var property vidas = 10
 	var property position = game.at(1, 1)
 
 	method mostrarVida() {
-		vidas = (1..3).map({ n => new Corazon(position = game.at(n + 11, 10))})
-		//vidas.times({ n => game.addVisual(new Corazon(position = game.at(n + 11, 10)))})
-		vidas.forEach({unCorazon => game.addVisual(unCorazon)})
+		game.say(self, vidas.toString())
 	}
 
-	method sacarVida() {
-		vidas = vidas - 1
-		vidas.remove()
+	method sacarVida(danio) {
+		vidas = vidas - danio
 		self.mostrarVida()
 	}
 
@@ -129,10 +135,17 @@ object casper {
 
 }
 
-class Corazon{
+
+
+class Corazon {
+
 	var property position
 
 	method image() = "corazon.png"
 	
+	method borrar(){
+		game.removeVisual(self)
+	}
+
 }
 
