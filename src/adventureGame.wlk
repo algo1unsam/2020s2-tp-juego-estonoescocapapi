@@ -16,7 +16,6 @@ object adventureGame {
 		game.addVisualCharacter(casper)
 		casper.mostrarVida()
 		game.start()
-	;
 	}
 
 	method configurarPantalla() {
@@ -43,13 +42,17 @@ object adventureGame {
 	}
 
 	method definirControles() {
-		keyboard.s().onPressDo{casper.sacarVida(1)}
+		keyboard.s().onPressDo{ casper.sacarVida(5)}
 	// keyboard.r().onPressDo {cursor.reforzarHeroe() }
 	// keyboard.a().onPressDo {wakanda.esAtacada(cursor.heroeElegido())}
 	// keyboard.s().onPressDo {wakanda.situacion()}
 	// keyboard.num(1).onPressDo { capitanAmerica.cambiarEscudo(escudito)}
 	// keyboard.num(2).onPressDo { capitanAmerica.cambiarEscudo(escudoSimple)}
 	// keyboard.num(3).onPressDo { capitanAmerica.cambiarEscudo(cacerola)}
+	}
+
+	method perder() {
+		game.stop()
 	}
 
 }
@@ -119,33 +122,46 @@ object puerta {
 
 object casper {
 
-	var property vidas = 10
-	var property position = game.at(1, 1)
+	const corazones = []
+	var vidas = 3
+	var property position = game.at(1, 2)
 
 	method mostrarVida() {
-		game.say(self, vidas.toString())
+		vidas.times({ cant => corazones.add(new Corazon(position = game.at(cant + 23, 34)))})
+		corazones.forEach({ corazon => game.addVisual(corazon)})
 	}
 
 	method sacarVida(danio) {
-		vidas = vidas - danio
-		self.mostrarVida()
+		
+		if (danio >= vidas) {
+			
+			corazones.forEach({ corazon => game.removeVisual(corazon)})
+			corazones.clear()
+			vidas = 0
+			game.onTick(2000, "CHAU", { adventureGame.perder()})
+			
+		} else 	vidas -= danio
+				danio.times({ n => self.perderCorazon()})
+		
+		if(vidas == 0){
+			game.onTick(2000, "CHAU", { adventureGame.perder()})
+		}
 	}
 
 	method image() = "casper_el_robot.png"
 
+	method perderCorazon() {
+		game.removeVisual(corazones.first())
+		corazones.remove(corazones.first())
+	}
+
 }
-
-
 
 class Corazon {
 
 	var property position
 
 	method image() = "corazon.png"
-	
-	method borrar(){
-		game.removeVisual(self)
-	}
 
 }
 
