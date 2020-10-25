@@ -2,11 +2,29 @@ import wollok.game.*
 import adventureGame.*
 
 
+class Personaje{
+	
+	var property position = null
+	var nombre = null
+	var property movimiento = null
+	var property vida = null
+	
+	method image()= movimiento.image()
+	
+	
+	method mover(direccion){
+		movimiento.direccion(direccion)
+		self.position(movimiento.siguientePosicion())
+	}
+	
+}
+
 object casper {
 
 	const corazones = []
 	var vidas = 3
 	var property position = game.at(1, 2)
+	
 
 	method mostrarVida() {
 		vidas.times({ cant => corazones.add(new Corazon(position = game.at(cant + 23, 34)))})
@@ -36,6 +54,8 @@ object casper {
 		game.removeVisual(corazones.first())
 		corazones.remove(corazones.first())
 	}
+	
+	
 
 }
 
