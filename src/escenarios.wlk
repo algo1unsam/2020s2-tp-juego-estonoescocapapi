@@ -6,11 +6,13 @@ object piso {
 		20.times({ n => game.addVisual(new PisoDeTierra(position = game.at(n - 1, 0)))})
 		20.times({ n => game.addVisual(new PisoDePasto(position = game.at(n - 1, 1)))})
 		30.times({ n => game.addVisual(new Agua(position = game.at(n + 19, 0)))})
-		5.times({ n => game.addVisual(new PisoDePasto(position = game.at(n + 35, 6)))})
-		5.times({ n => game.addVisual(new PisoDePasto(position = game.at(n - 1, 10)))})
-		2.times({ n => game.addVisual(new PisoDePasto(position = game.at(n + 12, 6)))})
-		2.times({ n => game.addVisual(new PisoDePasto(position = game.at(n + 7, 7)))})
-		3.times({ n => game.addVisual(new PisoDePasto(position = game.at(n + 1, 8)))})
+		7.times({ n => game.addVisual(new PisoDePasto(position = game.at(n + 42, 16)))})
+		8.times({ n => game.addVisual(new PisoDePasto(position = game.at(n + 17, 7)))})
+		5.times({ n => game.addVisual(new PisoDePasto(position = game.at(n + 23, 13)))})
+		14.times({ n => game.addVisual(new PisoDePasto(position = game.at(n - 1, 15)))})
+		26.times({ n => game.addVisual(new PisoDePasto(position = game.at(n + 5, 23)))})
+		18.times({ n => game.addVisual(new PisoDePasto(position = game.at(n + 23, 28)))})
+		
 	}
 
 }
@@ -18,7 +20,7 @@ object piso {
 object llaves {
 
 	method mostrarLlave() {
-		game.addVisual(new Llave(position = game.at(3, 9)))
+		game.addVisual(new Llave(position = game.at(2, 16)))
 	}
 
 }
@@ -57,7 +59,7 @@ class Llave {
 
 object puerta {
 
-	method position() = game.at(20, 8)
+	method position() = game.at(47, 17)
 
 	method image() = "puerta_cerrada.png"
 

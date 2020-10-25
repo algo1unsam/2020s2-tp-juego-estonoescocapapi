@@ -4,8 +4,6 @@ import escenarios.*
 
 object adventureGame {
 
-	var nivel = 0
-
 	method jugar() {
 		self.configurarPantalla()
 		self.definirControles()
