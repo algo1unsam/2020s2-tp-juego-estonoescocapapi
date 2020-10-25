@@ -4,19 +4,12 @@ import escenarios.*
 
 object adventureGame {
 
-	var nivel = 1
+	var nivel = 0
 
 	method jugar() {
 		self.configurarPantalla()
-		self.configurarCursor()
-		self.agregarPersonajes()
 		self.definirControles()
 		game.cellSize(15)
-		piso.mostrarPiso()
-		llaves.mostrarLlave()
-		game.addVisual(puerta)
-		game.addVisualCharacter(casper)
-		casper.mostrarVida()
 		game.start()
 	}
 
@@ -24,39 +17,43 @@ object adventureGame {
 		game.title("Adventure Game")
 		game.width(50)
 		game.height(35)
-		game.boardGround("fondo_" + nivel + ".png")
+		const tableroDeCarga = new FondoTablero(imagen = "fondo_carga.png")
+		game.addVisual(tableroDeCarga)
 	}
 
-	method configurarCursor() {
-	// game.addVisualCharacter(cursor)
-	// game.whenCollideDo(cursor,{personaje => cursor.seleccionarHeroe(personaje)})
+	method nivel_uno() {
+		const nivel_uno = new FondoTablero(imagen = "fondo_1.png")
+		game.clear()
+		game.addVisual(nivel_uno)
+		piso.mostrarPiso()
+		llaves.mostrarLlave()
+		game.addVisual(puerta)
+		game.addVisualCharacter(casper)
+		casper.mostrarVida()
+		keyboard.num(0).onPressDo{ self.gameOver()}
 	}
 
-	method agregarPersonajes() {
-	// game.addVisual(ironMan)
-	// game.addVisual(hulk)
-	// game.addVisual(capitanAmerica)
-	// game.addVisual(thor)
-	// game.addVisual(escudito)
-	// game.addVisual(escudoSimple)
-	// game.addVisual(wakanda)
-	// game.addVisual(cacerola)
+	method gameOver() {
+		const gameOver = new FondoTablero(imagen = "gameover.png")
+		game.clear()
+		game.addVisual(gameOver)
+		game.onTick(1000, "fin", game.stop())
 	}
 
 	method definirControles() {
-		keyboard.s().onPressDo{ casper.sacarVida(5)}
-	// keyboard.r().onPressDo {cursor.reforzarHeroe() }
-	// keyboard.a().onPressDo {wakanda.esAtacada(cursor.heroeElegido())}
-	// keyboard.s().onPressDo {wakanda.situacion()}
-	// keyboard.num(1).onPressDo { capitanAmerica.cambiarEscudo(escudito)}
-	// keyboard.num(2).onPressDo { capitanAmerica.cambiarEscudo(escudoSimple)}
-	// keyboard.num(3).onPressDo { capitanAmerica.cambiarEscudo(cacerola)}
-	}
-
-	method perder() {
-		game.stop()
+		keyboard.num(1).onPressDo{ self.nivel_uno()}
+		keyboard.num(0).onPressDo{ self.gameOver()}
 	}
 
 }
 
+class FondoTablero {
+
+	const imagen
+
+	method image() = imagen
+
+	method position() = game.origin()
+
+}
 

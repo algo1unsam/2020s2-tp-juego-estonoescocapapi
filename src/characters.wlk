@@ -20,13 +20,13 @@ object casper {
 			corazones.forEach({ corazon => game.removeVisual(corazon)})
 			//corazones.clear()
 			//vidas = 0
-			game.onTick(2000, "CHAU", { adventureGame.perder()})
+			game.onTick(2000, "CHAU", { adventureGame.gameOver()})
 			
 		} else 	vidas -= danio
 				danio.times({ n => self.perderCorazon()})
 		
 		if(vidas == 0){
-			game.onTick(2000, "CHAU", { adventureGame.perder()})
+			game.onTick(2000, "CHAU", { adventureGame.gameOver()})
 		}
 	}
 
