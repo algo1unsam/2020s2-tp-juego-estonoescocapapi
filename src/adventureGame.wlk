@@ -1,6 +1,7 @@
 import wollok.game.*
 import characters.*
 import escenarios.*
+import movimientos.*
 
 object adventureGame {
 
@@ -26,9 +27,10 @@ object adventureGame {
 		piso.mostrarPiso()
 		llaves.mostrarLlave()
 		game.addVisual(puerta)
-		game.addVisualCharacter(casper)
-		casper.mostrarVida()
-		keyboard.num(0).onPressDo{ self.gameOver()}
+		game.addVisual(casper)
+		casper.inicializar()
+		keyboard.num(0).onPressDo({ self.gameOver()})
+		self.definirControles()
 	}
 
 	method gameOver() {
@@ -41,6 +43,10 @@ object adventureGame {
 	method definirControles() {
 		keyboard.num(1).onPressDo{ self.nivel_uno()}
 		keyboard.num(0).onPressDo{ self.gameOver()}
+		keyboard.right().onPressDo({casper.mover(derecha)})
+		keyboard.left().onPressDo({casper.mover(izquierda)})
+		keyboard.up().onPressDo({casper.mover(arriba)})
+		keyboard.down().onPressDo({casper.mover(abajo)})
 	}
 
 }

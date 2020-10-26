@@ -9,14 +9,14 @@ class Movimiento{
 	
 	method siguientePosicion()= direccion.posicion(personaje)
 	
-	method image()= personaje.nombre() + "_movement_" + direccion.nombre()
+	method image()= personaje.nombre() + "_movement_" + direccion.nombre() + ".png"
 	
 }
 
 
 object derecha{
 	
-	method posicion(personaje) = personaje.position().rigth(1) 
+	method posicion(personaje) = personaje.position().right(1) 
 	
 	method nombre() = "right"
 	
