@@ -47,6 +47,7 @@ object adventureGame {
 		keyboard.left().onPressDo({casper.mover(izquierda)})
 		keyboard.up().onPressDo({casper.mover(arriba)})
 		keyboard.down().onPressDo({casper.mover(abajo)})
+		keyboard.space().onPressDo({casper.saltar()})
 	}
 
 }

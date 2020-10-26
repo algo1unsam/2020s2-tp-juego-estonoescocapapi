@@ -62,11 +62,22 @@ object casper inherits Personaje {
 		game.removeVisual(corazones.first())
 		corazones.remove(corazones.first())
 	}
+	method saltar(){
+		self.subir()
+		game.schedule(500, {self.caer()})
+	}
+	
+	method subir(){
+		position = position.up(2)
+	}
+
+	method caer(){
+		position = position.down(2)
 	
 	
 
 }
-
+}
 class Corazon {
 
 	var property position
