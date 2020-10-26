@@ -1,4 +1,5 @@
 import wollok.game.*
+import characters.*
 
 object piso {
 
@@ -22,6 +23,8 @@ object llaves {
 	method mostrarLlave() {
 		game.addVisual(new Llave(position = game.at(2, 16)))
 	}
+	
+	
 
 }
 
@@ -54,6 +57,11 @@ class Llave {
 	var property position
 
 	method image() = "llave.png"
+	
+	method agarrarLlave(){
+		game.removeVisual(self)
+		casper.llaves().add(self)
+	}
 
 }
 

@@ -23,6 +23,7 @@ class Personaje{
 object casper inherits Personaje {
 
 	const corazones = []
+	var property llaves = []
 	
 	method inicializar(){
 		nombre = "casper_el_robot"
@@ -73,11 +74,21 @@ object casper inherits Personaje {
 
 	method caer(){
 		position = position.down(2)
+	}
 	
+	method hayUnaLlave()= game.getObjectsIn(self.position()).size() > 1
 	
+	method agarrarLlave(){
+		if (not self.hayUnaLlave()){
+			self.error("No hay ninguna llave")
+		}else
+			game.colliders(self).forEach({llave=> llave.agarrarLlave()})
+	}
 
 }
-}
+
+	
+
 class Corazon {
 
 	var property position
