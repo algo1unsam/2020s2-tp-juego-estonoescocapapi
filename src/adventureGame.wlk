@@ -25,6 +25,7 @@ object adventureGame {
 		game.clear()
 		game.addVisual(nivel_uno)
 		piso.mostrarPiso()
+		piso.mostrarEscaleras()
 		llaves.mostrarLlave()
 		game.addVisual(puerta)
 		game.addVisual(casper)
@@ -37,20 +38,21 @@ object adventureGame {
 		const gameOver = new FondoTablero(imagen = "gameover.png")
 		game.clear()
 		game.addVisual(gameOver)
-		game.onTick(1000, "fin", game.stop())
+		game.onTick(1500, "game over", { game.stop()})
 	}
 
 	method definirControles() {
 		keyboard.num(1).onPressDo{ self.nivel_uno()}
+		keyboard.num(2).onPressDo{ game.stop()}
 		keyboard.num(0).onPressDo{ self.gameOver()}
-		keyboard.right().onPressDo({casper.mover(derecha)})
-		keyboard.left().onPressDo({casper.mover(izquierda)})
-		keyboard.up().onPressDo({casper.mover(arriba)})
-		keyboard.down().onPressDo({casper.mover(abajo)})
-		keyboard.space().onPressDo({casper.saltar()})
-		keyboard.a().onPressDo({casper.agarrarLlave()})
-	}
-
+		keyboard.right().onPressDo({ casper.mover(derecha)})
+		keyboard.left().onPressDo({ casper.mover(izquierda)})
+		keyboard.up().onPressDo({ casper.subirEscaleraSiEsPosible()})
+		keyboard.down().onPressDo({ casper.mover(abajo)})
+		keyboard.space().onPressDo({ casper.saltar()})
+		keyboard.a().onPressDo({ casper.agarrarLlave()})
+		
+		}
 }
 
 class FondoTablero {
