@@ -83,7 +83,32 @@ object casper inherits Personaje {
 			position = position.up(2)
 		}
 	}
+	method gravedad(){
+		if(self.puedeMover(abajo) and !self.hayUnaEscalera()){
+			self.position(self.position().down(1))
+		}
+	}
 
+}
+
+class Enemigo inherits Personaje{
+	
+	const danio = 1
+	
+	method inicializar(){
+		
+		nombre = ""
+		movimiento = new Movimiento(direccion = derecha, personaje = self)
+		vida = 1
+	}
+	method atacar(personaje){
+		personaje.sacarVida(danio)
+	}
+	method morir(){
+		game.removeVisual(self)
+	}
+	
+	
 }
 
 class Corazon {
