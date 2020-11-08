@@ -76,11 +76,11 @@ object casper inherits Personaje {
 		} else game.colliders(self).forEach({ llave => llave.agarrarLlave() })
 	}
 
-	method hayUnaEscalera() = game.getObjectsIn(self.position()).size() > 1 or game.getObjectsIn(position.down(1)).size() == 1
+	method hayUnaEscalera() = return game.getObjectsIn(self.position()).size() > 1
 
 	method subirEscaleraSiEsPosible() {
 		if (self.hayUnaEscalera()) {
-			position = position.up(2)
+			position = position.up(1)
 		}
 	}
 	method gravedad(){

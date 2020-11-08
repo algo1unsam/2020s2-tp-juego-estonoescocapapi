@@ -50,9 +50,7 @@ object adventureGame {
 		keyboard.down().onPressDo({ casper.mover(abajo)})
 		keyboard.space().onPressDo({ casper.saltar()})
 		keyboard.a().onPressDo({ casper.agarrarLlave()})
-		
-		}
+	}
+
 }
-
-
 
