@@ -20,12 +20,11 @@ object adventureGame {
 		game.addVisual(tableroDeCarga)
 	}
 
-	method nivel_uno() {
-		const nivel_uno = new FondoTablero(imagen = "fondo_1.png")
+	method primerNivel() {
 		game.clear()
-		game.addVisual(nivel_uno)
-		piso.mostrarPiso()
-		piso.mostrarEscaleras()
+		nivel_uno.mostrarFondo()
+		nivel_uno.mostrarPiso()
+		nivel_uno.mostrarEscaleras()
 		llaves.mostrarLlave()
 		game.addVisual(puerta)
 		game.addVisual(casper)
@@ -42,7 +41,7 @@ object adventureGame {
 	}
 
 	method definirControles() {
-		keyboard.num(1).onPressDo{ self.nivel_uno()}
+		keyboard.num(1).onPressDo{ self.primerNivel()}
 		keyboard.num(2).onPressDo{ game.stop()}
 		keyboard.num(0).onPressDo{ self.gameOver()}
 		keyboard.right().onPressDo({ casper.mover(derecha)})
@@ -55,13 +54,5 @@ object adventureGame {
 		}
 }
 
-class FondoTablero {
 
-	const imagen
-
-	method image() = imagen
-
-	method position() = game.origin()
-
-}
 

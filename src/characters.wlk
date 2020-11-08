@@ -84,7 +84,7 @@ object casper inherits Personaje {
 		}
 	}
 	method gravedad(){
-		if(self.puedeMover(abajo) and !self.hayUnaEscalera()){
+		if(self.puedeMover(abajo) and not self.hayUnaEscalera()){
 			self.position(self.position().down(1))
 		}
 	}
