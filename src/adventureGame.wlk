@@ -46,7 +46,7 @@ object adventureGame {
 	}
 
 	method definirControles() {
-		keyboard.num(1).onPressDo{ self.primerNivel()}
+		keyboard.num(1).onPressDo{ self.instrucciones()}
 		keyboard.num(2).onPressDo{ game.stop()}
 		keyboard.num(0).onPressDo{ self.gameOver()}
 		keyboard.right().onPressDo({ casper.mover(derecha)})
@@ -56,6 +56,13 @@ object adventureGame {
 		keyboard.space().onPressDo({ casper.saltar()})
 		keyboard.a().onPressDo({ casper.agarrarLlave()})
 	}
+	method instrucciones(){
+        game.clear()
+        const tableroDeCarga = new FondoTablero(imagen = "instrucciones.png")
+        game.addVisual(tableroDeCarga)
+
+        game.schedule(1500, {self.primerNivel()})
+    }
 
 }
 
