@@ -35,6 +35,7 @@ object adventureGame {
 		var fantasma = new Enemigo(danio = 1, tipo = 2,  position = game.at(10, 24)) 
 		fantasma.inicializar()
 		game.addVisual(fantasma)
+		game.onTick(300,"enemigo",{fantasma.mover(fantasma.movimiento().direccion())})
 	}
 
 	method gameOver() {

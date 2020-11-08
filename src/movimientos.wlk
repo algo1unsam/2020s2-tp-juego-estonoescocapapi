@@ -20,6 +20,8 @@ object derecha{
 	
 	method nombre() = "right"
 	
+	method direccionOpuesta() = izquierda
+	
 }
 
 object izquierda{
@@ -27,6 +29,8 @@ object izquierda{
 	method posicion(personaje) = personaje.position().left(1)
 	
 	method nombre()= "left"
+	
+	method direccionOpuesta() = derecha
 	
 }
 

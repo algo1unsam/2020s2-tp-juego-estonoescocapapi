@@ -67,9 +67,6 @@ object casper inherits Personaje {
 		position = position.up(distancia)
 	}
 
-	method caer() {
-		self.gravedad()
-	}
 
 	method hayUnaLlave() = game.getObjectsIn(self.position()).size() > 1
 
@@ -119,6 +116,18 @@ class Enemigo inherits Personaje {
 
 	method morir() {
 		game.removeVisual(self)
+	}
+	override method mover(direccion){
+		
+		//game.schedule(100,{game.onTick(100,"enemigo",{self.mover(derecha)})})
+		//game.schedule(150,{game.removeTickEvent("enemigo")})
+		//movimiento.direccion(direccion)
+		//self.position(movimiento.siguientePosicion())
+		//game.schedule(150,{game.onTick(100,"enemigo",{self.mover(izquierda)})})
+		//game.onTick(100,"enemigo",{self.mover(izquierda)})
+		movimiento.direccion(direccion)
+		self.position(movimiento.siguientePosicion())
+		direccion.direccionOpuesta()
 	}
 
 }
