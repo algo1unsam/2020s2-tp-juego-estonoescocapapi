@@ -1,6 +1,7 @@
 import wollok.game.*
 import adventureGame.*
 import movimientos.*
+import escenarios.*
 
 class Personaje {
 
@@ -76,16 +77,21 @@ object casper inherits Personaje {
 		} else game.colliders(self).forEach({ llave => llave.agarrarLlave() })
 	}
 
-	method hayUnaEscalera() = return game.getObjectsIn(self.position()).size() > 1
+	//method hayUnaEscalera() = return not self.puedeMover(arriba) or not self.puedeMover(abajo)
+	
+	method puedeSubirEscalera() = nivel_uno.escaleras().contains(game.getObjectsIn(self.position()))
+		
+		
+	
 
 	method subirEscaleraSiEsPosible() {
-		if (self.hayUnaEscalera()) {
+		if (self.puedeSubirEscalera()) {
 			position = position.up(1)
 		}
 	}
 
 	method gravedad() {
-		if (self.puedeMover(abajo) and not self.hayUnaEscalera()) {
+		if (self.puedeMover(abajo)){
 			self.position(self.position().down(1))
 		}
 	}
@@ -117,17 +123,18 @@ class Enemigo inherits Personaje {
 	method morir() {
 		game.removeVisual(self)
 	}
-	override method mover(direccion){
-		
-		//game.schedule(100,{game.onTick(100,"enemigo",{self.mover(derecha)})})
-		//game.schedule(150,{game.removeTickEvent("enemigo")})
-		//movimiento.direccion(direccion)
-		//self.position(movimiento.siguientePosicion())
-		//game.schedule(150,{game.onTick(100,"enemigo",{self.mover(izquierda)})})
-		//game.onTick(100,"enemigo",{self.mover(izquierda)})
-		movimiento.direccion(direccion)
+	override method mover(direccion) {
+		if (self.puedeMover(direccion)) {
+			movimiento.direccion(direccion)
+		} else {
+			movimiento.direccion(direccion.direccionOpuesta())
+		}
 		self.position(movimiento.siguientePosicion())
-		direccion.direccionOpuesta()
+		
+		}
+	 method puedeMover(direccion) {
+		const direccionAEvaluar = game.getObjectsIn(direccion.posicion(self).down(1))
+		return not direccionAEvaluar.isEmpty()
 	}
 
 }

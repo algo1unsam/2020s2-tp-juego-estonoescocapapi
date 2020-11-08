@@ -4,7 +4,7 @@ import characters.*
 object nivel_uno {
 
 	var piso = []
-	var escaleras = []
+	var property escaleras = []
 	const nivel_uno = new FondoTablero(imagen = "fondo_1.png")
 
 	method mostrarPiso() {
