@@ -25,7 +25,7 @@ object casper inherits Personaje {
 
 	method inicializar() {
 		nombre = "casper_el_robot"
-		movimiento = new Movimiento(direccion = izquierda, personaje = self)
+		movimiento = new Movimiento(direccion = derecha, personaje = self)
 		position = game.at(1, 2)
 		vida = 5
 		self.mostrarVida()
@@ -56,16 +56,19 @@ object casper inherits Personaje {
 	}
 
 	method saltar() {
-		self.subir()
-		game.schedule(500, { self.caer()})
+		game.removeTickEvent("Gravedad")
+		game.onTick(10, "Salto", {self.subir(1)})
+		game.schedule(150, {game.removeTickEvent("Salto")})
+		game.schedule(150, {game.onTick(10, "Gravedad", {self.gravedad()})})
+		
 	}
 
-	method subir() {
-		position = position.up(3)
+	method subir(distancia) {
+		position = position.up(distancia)
 	}
 
 	method caer() {
-		position = position.down(3)
+		self.gravedad()
 	}
 
 	method hayUnaLlave() = game.getObjectsIn(self.position()).size() > 1
@@ -83,32 +86,41 @@ object casper inherits Personaje {
 			position = position.up(1)
 		}
 	}
-	method gravedad(){
-		if(self.puedeMover(abajo) and not self.hayUnaEscalera()){
+
+	method gravedad() {
+		if (self.puedeMover(abajo) and not self.hayUnaEscalera()) {
 			self.position(self.position().down(1))
 		}
 	}
 
+	method puedeMover(direccion) {
+		const direccionAEvaluar = game.getObjectsIn(direccion.posicion(self))
+		return direccionAEvaluar.isEmpty()
+	}
+
 }
 
-class Enemigo inherits Personaje{
+class Enemigo inherits Personaje {
+
+	const danio 
+	const tipo
 	
-	const danio = 1
-	
-	method inicializar(){
-		
-		nombre = ""
+	//override method image() = "enemigo_1_derecha.png"
+
+	method inicializar() {
+		nombre = "enemigo" + tipo.toString() 
 		movimiento = new Movimiento(direccion = derecha, personaje = self)
 		vida = 1
 	}
-	method atacar(personaje){
+
+	method atacar(personaje) {
 		personaje.sacarVida(danio)
 	}
-	method morir(){
+
+	method morir() {
 		game.removeVisual(self)
 	}
-	
-	
+
 }
 
 class Corazon {
