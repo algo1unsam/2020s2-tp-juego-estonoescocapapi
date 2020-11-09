@@ -26,11 +26,16 @@ object nivel_uno {
 	}
 
 	method mostrarEscaleras() {
-		4.times({ n => escaleras.add(new Escalera(position = game.at(18, 1 + n)))})
+		4.times({ n => escaleras.add(new Escalera(position = game.at(18, 1 + n), indice = 0))})
+		2.times({ n => escaleras.add(new Escalera(position = game.at(18, 5 + n), indice = 1))})
 		4.times({ n => escaleras.add(new Escalera(position = game.at(24, 7 + n)))})
+		2.times({ n => escaleras.add(new Escalera(position = game.at(24, 11 + n), indice = 1))})
 		8.times({ n => escaleras.add(new Escalera(position = game.at(27, 13 + n)))})
+		2.times({ n => escaleras.add(new Escalera(position = game.at(27, 21 + n), indice = 1))})
 		3.times({ n => escaleras.add(new Escalera(position = game.at(24, 23 + n)))})
+		2.times({ n => escaleras.add(new Escalera(position = game.at(24, 26 + n), indice = 1))})
 		7.times({ n => escaleras.add(new Escalera(position = game.at(12, 14 + n)))})
+		2.times({ n => escaleras.add(new Escalera(position = game.at(12, 21 + n), indice = 1))})
 		escaleras.forEach({ unaEscalera => game.addVisual(unaEscalera)})
 	}
 
@@ -73,7 +78,7 @@ object nivel_uno {
 		fantasma.inicializar()
 		game.addVisual(fantasma)
 		
-		//game.onCollideDo(casper,{ personaje => personaje.atacar(casper)})
+		game.onCollideDo(casper,{ personaje => personaje.atacar(casper)})
 	}
 
 }

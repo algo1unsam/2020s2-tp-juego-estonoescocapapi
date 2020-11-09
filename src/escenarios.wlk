@@ -51,10 +51,16 @@ class Llave {
 class Escalera {
 
 	var property position
+	
+	const images = ["escalera.png", "escalera_invisible.png"]
+	
+	const indice = 0
 
-	method image() = "escalera.png"
+	method image() = images.get(indice)	
 	
 	method atacar(parametro) = 0
+	
+	
 
 }
 
