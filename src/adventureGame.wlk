@@ -35,11 +35,12 @@ object adventureGame {
 		var fantasma = new Enemigo(danio = 1, tipo = 2,  position = game.at(10, 24)) 
 		fantasma.inicializar()
 		game.addVisual(fantasma)
-		//game.onTick(25,"enemigo",{fantasma.mover(fantasma.movimiento().direccion())})
+		game.onTick(500,"enemigo",{fantasma.mover(fantasma.movimiento().direccion())})
 		var fantasma2 = new Enemigo(danio = 1, tipo = 3, position = game.at(30,29))
 		fantasma2.inicializar()
 		game.addVisual(fantasma2)
 		//game.onTick(25,"enemigo",{fantasma2.mover(fantasma2.movimiento().direccion())})
+		game.onTick(500,"Enemigo atacar",{fantasma.atacar(casper)})
 	}
 
 	method gameOver() {
@@ -55,8 +56,8 @@ object adventureGame {
 		keyboard.num(0).onPressDo{ self.gameOver()}
 		keyboard.right().onPressDo({ casper.mover(derecha)})
 		keyboard.left().onPressDo({ casper.mover(izquierda)})
-		keyboard.up().onPressDo({ casper.subirEscaleraSiEsPosible()})
-		keyboard.down().onPressDo({ casper.mover(abajo)})
+		keyboard.up().onPressDo({ casper.mover(arribaEnEscalera)})
+		keyboard.down().onPressDo({ casper.mover(abajoEnEscalera)})
 		keyboard.space().onPressDo({ casper.saltar()})
 		keyboard.a().onPressDo({ casper.agarrarLlave()})
 	}

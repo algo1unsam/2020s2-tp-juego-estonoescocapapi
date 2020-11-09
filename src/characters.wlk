@@ -42,11 +42,11 @@ object casper inherits Personaje {
 			corazones.forEach({ corazon => game.removeVisual(corazon)})
 				// corazones.clear()
 				// vida = 0
-			game.onTick(2000, "CHAU", { adventureGame.gameOver()})
+			game.onTick(1000, "CHAU", { adventureGame.gameOver()})
 		} else vida -= danio
 		danio.times({ n => self.perderCorazon()})
 		if (vida == 0) {
-			game.onTick(2000, "CHAU", { adventureGame.gameOver()})
+			game.onTick(1000, "CHAU", { adventureGame.gameOver()})
 		}
 	}
 
@@ -77,17 +77,12 @@ object casper inherits Personaje {
 		} else game.colliders(self).forEach({ llave => llave.agarrarLlave() })
 	}
 
-	//method hayUnaEscalera() = return not self.puedeMover(arriba) or not self.puedeMover(abajo)
+	method abajoHayEscalera() {
+		return game.getObjectsIn(self.position().down(1)).any({ i => i.image() == "escalera.png" })
+	}
 	
-	method puedeSubirEscalera() = nivel_uno.escaleras().contains(game.getObjectsIn(self.position()))
-		
-		
-	
-
-	method subirEscaleraSiEsPosible() {
-		if (self.puedeSubirEscalera()) {
-			position = position.up(1)
-		}
+	method estaSobreEscalera() {
+		return game.getObjectsIn(self.position()).any({ i => i.image() == "escalera.png" })
 	}
 
 	method gravedad() {
@@ -117,8 +112,13 @@ class Enemigo inherits Personaje {
 	}
 
 	method atacar(personaje) {
+		if (self.hayUnEnemigo()){
 		personaje.sacarVida(danio)
 	}
+	
+	}
+	
+	method hayUnEnemigo() = game.getObjectsIn(self.position()).size() > 1
 
 	method morir() {
 		game.removeVisual(self)

@@ -33,17 +33,36 @@ object izquierda{
 	method direccionOpuesta() = derecha
 	
 }
-
-object abajo{
+object abajo {
 	
-	method posicion(personaje) = personaje.position().down(1)
+	method posicion(personaje){
+		return personaje.position().down(1)
+	}
+}
+	
+
+object abajoEnEscalera{
+	
+	method posicion(personaje){
+		return if (personaje.estaSobreEscalera() or personaje.abajoHayEscalera()) {
+			personaje.position().down(1)
+		}else {
+			personaje.position().down(0)
+		}
+	}
 	
 	method nombre() = "upDown"
 }
 
-object arriba{
+object arribaEnEscalera{
 	
-	method posicion(personaje) = personaje.position().up(1)
+	method posicion(personaje) {
+		return if(personaje.estaSobreEscalera()){
+			personaje.position().up(1)
+		}else {
+			personaje.position().up(0)
+		}
+	}
 	
 	method nombre() = "upDown"
 	
