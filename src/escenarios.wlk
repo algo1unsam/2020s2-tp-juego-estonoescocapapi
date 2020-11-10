@@ -1,45 +1,35 @@
 import wollok.game.*
 import characters.*
+import adventureGame.*
 
+class Elementos{
+	var property position
+	method image()
+	method atacar(personaje) = 0
+}
 
-
-object llaves {
-
-	method mostrarLlave() {
-		game.addVisual(new Llave(position = game.at(2, 15)))
-	}
+class PisoDeTierra  inherits Elementos{
+	
+	override method image() = "piso_nivel_1_sin_pasto.png"
 
 }
 
-class PisoDeTierra {
+class PisoDePasto inherits Elementos {
 
-	var property position
-
-	method image() = "piso_nivel_1_sin_pasto.png"
+	override method image() = "piso_nivel_1.png"
 
 }
 
-class PisoDePasto {
+class Agua inherits Elementos{
 
-	var property position
-
-	method image() = "piso_nivel_1.png"
-
-}
-
-class Agua {
-
-	var property position
-
-	method image() = "agua_1.png"
+	override method image() = "agua_1.png"
+	override method atacar(personaje) = 5
 
 }
 
-class Llave {
+class Llave inherits Elementos{
 
-	var property position
-
-	method image() = "llave.png"
+	override method image() = "llave.png"
 
 	method agarrarLlave() {
 		game.removeVisual(self)
@@ -48,28 +38,23 @@ class Llave {
 
 }
 
-class Escalera {
+class Escalera inherits Elementos {
 
-	var property position
-	
 	const images = ["escalera.png", "escalera_invisible.png"]
 	
 	const indice = 0
 
-	method image() = images.get(indice)	
+	override method image() = images.get(indice)	
 	
-	method atacar(parametro) = 0
-	
-	
-
 }
 
-object puerta {
+class Puerta inherits Elementos {
 
-	method position() = game.at(47, 17)
-
-	method image() = "puerta_cerrada.png"
-
+	override method image() = "puerta_cerrada.png"
+	
+	method entrar(){
+		adventureGame.gameOver()
+	}
 }
 
 class FondoTablero {

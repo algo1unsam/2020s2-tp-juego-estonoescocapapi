@@ -76,7 +76,8 @@ object casper inherits Personaje {
 	}
 
 	method abajoHayEscalera() {
-		return game.getObjectsIn(self.position().down(1)).any({ i => i.image() == "escalera.png" or i.image() == "escalera_invisible.png" })
+		return game.getObjectsIn(self.position().down(2)).any({ i => i.image() == "escalera.png" or i.image() == "escalera_invisible.png" })
+		//return game.getObjectsIn(self.position()).any({ i => i.image() == "escalera.png" or i.image() == "escalera_invisible.png" })
 	}
 
 	method estaSobreEscalera() {
@@ -90,8 +91,18 @@ object casper inherits Personaje {
 	}
 
 	method puedeMover(direccion) {
-		const direccionAEvaluar = game.getObjectsIn(direccion.posicion(self))
+		const direccionAEvaluar = game.getObjectsIn(direccion.posicion(self)) 
 		return direccionAEvaluar.isEmpty()
+	}
+	
+	method estaEnLaPuerta(){
+		
+		if(llaves.size() == 1 and game.getObjectsIn(self.position()).any({ i => i.image() == "puerta_cerrada.png"})){
+		
+			adventureGame.nivelCompleto()
+
+		}else self.error("Primero tengo que encontrar la llave!!")
+		
 	}
 
 }

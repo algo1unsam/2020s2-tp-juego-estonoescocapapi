@@ -9,8 +9,9 @@ object nivel_uno {
 	var piso = []
 	var property escaleras = []
 	const nivel_uno = new FondoTablero(imagen = "fondo_1.png")
-	
-	var fantasma = new Enemigo(danio = 1, tipo = 2,  position = game.at(10, 24))
+	var fantasma = new Enemigo(danio = 1, tipo = 2, position = game.at(10, 24))
+	var puerta = new Puerta(position = game.at(48, 17))
+	var llave = new Llave(position = game.at(2, 15))
 
 	method mostrarPiso() {
 		20.times({ n => piso.add(new PisoDeTierra(position = game.at(n - 1, 0)))})
@@ -42,43 +43,37 @@ object nivel_uno {
 	method mostrarFondo() {
 		game.addVisual(nivel_uno)
 	}
-	
-	method agregarVisuales(){
-		
+
+	method agregarVisuales() {
 		self.mostrarFondo()
 		self.mostrarPiso()
 		self.mostrarEscaleras()
-		
-		llaves.mostrarLlave()
-		
-		game.addVisual(casper)
 		casper.inicializar()
-		
 		game.addVisual(puerta)
+		game.addVisual(casper)
+		game.addVisual(llave)
 	}
-	
-	method definirControles(){
+
+	method definirControles() {
 		keyboard.right().onPressDo({ casper.mover(derecha)})
 		keyboard.left().onPressDo({ casper.mover(izquierda)})
 		keyboard.up().onPressDo({ casper.mover(arribaEnEscalera)})
 		keyboard.down().onPressDo({ casper.mover(abajoEnEscalera)})
 		keyboard.space().onPressDo({ casper.saltar()})
 		keyboard.a().onPressDo({ casper.agarrarLlave()})
-		
-		
+		keyboard.e().onPressDo({casper.estaEnLaPuerta()})	
 	}
-	
-	method comenzar(){
+
+	method comenzar() {
 		game.clear()
 		self.agregarVisuales()
 		self.definirControles()
-		
-		game.onTick(10, "Gravedad", {casper.gravedad()})
-		game.onTick(500,"enemigo",{fantasma.mover(fantasma.movimiento().direccion())})
+		game.onTick(10, "Gravedad", { casper.gravedad()})
+		game.onTick(500, "enemigo", { fantasma.mover(fantasma.movimiento().direccion())})
 		fantasma.inicializar()
 		game.addVisual(fantasma)
-		
-		game.onCollideDo(casper,{ personaje => personaje.atacar(casper)})
+		game.onCollideDo(casper, { personaje => personaje.atacar(casper)})
 	}
 
 }
+
