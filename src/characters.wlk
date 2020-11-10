@@ -23,6 +23,7 @@ object casper inherits Personaje {
 
 	const corazones = []
 	var property llaves = []
+	var property nivel = 1
 
 	method inicializar() {
 		nombre = "casper_el_robot"
@@ -40,11 +41,11 @@ object casper inherits Personaje {
 	method sacarVida(danio) {
 		if (danio >= vida) {
 			corazones.forEach({ corazon => game.removeVisual(corazon)})
-				// corazones.clear()
-				// vida = 0
 			game.onTick(1000, "CHAU", { adventureGame.gameOver()})
 		} else vida -= danio
+		
 		danio.times({ n => self.perderCorazon()})
+		
 		if (vida == 0) {
 			game.onTick(1000, "CHAU", { adventureGame.gameOver()})
 		}
@@ -77,7 +78,6 @@ object casper inherits Personaje {
 
 	method abajoHayEscalera() {
 		return game.getObjectsIn(self.position().down(2)).any({ i => i.image() == "escalera.png" or i.image() == "escalera_invisible.png" })
-		//return game.getObjectsIn(self.position()).any({ i => i.image() == "escalera.png" or i.image() == "escalera_invisible.png" })
 	}
 
 	method estaSobreEscalera() {
@@ -91,18 +91,22 @@ object casper inherits Personaje {
 	}
 
 	method puedeMover(direccion) {
-		const direccionAEvaluar = game.getObjectsIn(direccion.posicion(self)) 
+		const direccionAEvaluar = game.getObjectsIn(direccion.posicion(self))
 		return direccionAEvaluar.isEmpty()
 	}
-	
-	method estaEnLaPuerta(){
-		
-		if(llaves.size() == 1 and game.getObjectsIn(self.position()).any({ i => i.image() == "puerta_cerrada.png"})){
-		
-			adventureGame.nivelCompleto()
 
-		}else self.error("Primero tengo que encontrar la llave!!")
-		
+	method estaEnLaPuerta() {
+		if (llaves.size() == 1 and game.getObjectsIn(self.position()).any({ i => i.image() == "puerta_cerrada.png" })) {
+			
+			if(self.estaEnNivel2()){
+				adventureGame.gameOver()
+			}else adventureGame.nivelCompleto()
+			
+		} else self.error("Tengo que encontrar la llave y despues ir a la puerta!!")
+	}
+	
+	method estaEnNivel2(){
+		return nivel == 2
 	}
 
 }
@@ -112,7 +116,6 @@ class Enemigo inherits Personaje {
 	const danio
 	const tipo
 
-	// override method image() = "enemigo_1_derecha.png"
 	method inicializar() {
 		nombre = "enemigo" + tipo.toString()
 		movimiento = new Movimiento(direccion = derecha, personaje = self)
@@ -120,9 +123,9 @@ class Enemigo inherits Personaje {
 	}
 
 	method atacar(personaje) {
-		if (self.hayUnEnemigo()) {
+		//if (self.hayUnEnemigo()) {
 			personaje.sacarVida(danio)
-		}
+		//}
 	}
 
 	method hayUnEnemigo() = game.getObjectsIn(self.position()).size() > 1

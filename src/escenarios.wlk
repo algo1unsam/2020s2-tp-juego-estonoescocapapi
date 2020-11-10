@@ -1,15 +1,22 @@
 import wollok.game.*
 import characters.*
 import adventureGame.*
+import niveles.*
 
-class Elementos{
+class Elementos {
+
 	var property position
+
 	method image()
-	method atacar(personaje) = 0
+
+	method atacar(personaje){
+		
+	}
+
 }
 
-class PisoDeTierra  inherits Elementos{
-	
+class PisoDeTierra inherits Elementos {
+
 	override method image() = "piso_nivel_1_sin_pasto.png"
 
 }
@@ -20,14 +27,15 @@ class PisoDePasto inherits Elementos {
 
 }
 
-class Agua inherits Elementos{
+class Agua inherits Elementos {
 
 	override method image() = "agua_1.png"
+
 	override method atacar(personaje) = 5
 
 }
 
-class Llave inherits Elementos{
+class Llave inherits Elementos {
 
 	override method image() = "llave.png"
 
@@ -40,21 +48,22 @@ class Llave inherits Elementos{
 
 class Escalera inherits Elementos {
 
-	const images = ["escalera.png", "escalera_invisible.png"]
-	
+	const images = [ "escalera.png", "escalera_invisible.png" ]
 	const indice = 0
 
-	override method image() = images.get(indice)	
-	
+	override method image() = images.get(indice)
+
 }
 
 class Puerta inherits Elementos {
 
 	override method image() = "puerta_cerrada.png"
-	
-	method entrar(){
-		adventureGame.gameOver()
+
+	method entrar() {
+		// adventureGame.gameOver()
+		adventureGame.nivelCompleto()
 	}
+
 }
 
 class FondoTablero {

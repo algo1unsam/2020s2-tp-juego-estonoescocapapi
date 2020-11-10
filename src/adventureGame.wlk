@@ -25,15 +25,14 @@ object adventureGame {
 		const gameOver = new FondoTablero(imagen = "gameover.png")
 		game.clear()
 		game.addVisual(gameOver)
-		game.onTick(1500, "game over", { game.stop()})
-		game.onTick(1500, "1", {self.jugar()})
+		game.schedule(1500, { game.stop()})
 	}
 
 	method nivelCompleto() {
 		const nivelCompleto = new FondoTablero(imagen = "nivel_completo.png")
 		game.clear()
 		game.addVisual(nivelCompleto)
-		game.onTick(1500, "nivelCompleto", { game.stop()})
+		game.schedule(1500, { nivel_dos.comenzar()})
 	}
 
 	method definirControles() {
