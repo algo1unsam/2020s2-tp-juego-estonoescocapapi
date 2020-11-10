@@ -21,34 +21,12 @@ object adventureGame {
 		game.addVisual(tableroDeCarga)
 	}
 
-	// method primerNivel() {
-	// game.clear()
-	// nivel_uno.mostrarFondo()
-	// nivel_uno.mostrarPiso()
-	// nivel_uno.mostrarEscaleras()
-	// llaves.mostrarLlave()
-	// game.addVisual(puerta)
-	// game.addVisual(casper)
-	// casper.inicializar()
-	// keyboard.num(0).onPressDo({ self.gameOver()})
-	// self.definirControles()
-	// game.onTick(10, "Gravedad", {casper.gravedad()})
-	// var fantasma = new Enemigo(danio = 1, tipo = 2,  position = game.at(10, 24)) 
-	// fantasma.inicializar()
-	// game.addVisual(fantasma)
-	// game.onTick(500,"enemigo",{fantasma.mover(fantasma.movimiento().direccion())})
-	// var fantasma2 = new Enemigo(danio = 1, tipo = 3, position = game.at(30,29))
-	// fantasma2.inicializar()
-	// game.addVisual(fantasma2)
-	// game.onTick(25,"enemigo",{fantasma2.mover(fantasma2.movimiento().direccion())})
-	// game.onTick(500,"Enemigo atacar",{fantasma.atacar(casper)})
-	// game.onCollideDo(casper,{ personaje => personaje.atacar(casper)})
-	// }
 	method gameOver() {
 		const gameOver = new FondoTablero(imagen = "gameover.png")
 		game.clear()
 		game.addVisual(gameOver)
 		game.onTick(1500, "game over", { game.stop()})
+		game.onTick(1500, "1", {self.jugar()})
 	}
 
 	method nivelCompleto() {
